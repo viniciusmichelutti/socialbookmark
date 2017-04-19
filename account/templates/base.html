@@ -3,7 +3,7 @@
 <html>
     <head>
         <title>{% block title %}{% endblock %}</title>
-        <link href="{% static "css/base.css" %}" rel="stylesheet" />
+        <link href="{% static "css/style.css" %}" rel="stylesheet" />
     </head>
     <body>
         <header>
@@ -25,7 +25,7 @@
 
             <span class="user">
                 {% if request.user.is_authenticated %}
-                    Hello {{ request.user }},
+                    Hello {{ request.user.first_name }},
                     <a href="{% url "change_password" %}">change password</a>
                     <a href="{% url "logout" %}">logout</a>
                 {% else %}

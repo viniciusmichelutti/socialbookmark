@@ -4,5 +4,5 @@
 
 {% block content %}
     <h1>Dashboard</h1>
-    <p>Welcome to your dashboard {{ request.user }}.</p>
+    <p>Welcome to your dashboard {{ request.user.get_full_name }}.</p>
 {% endblock %}
