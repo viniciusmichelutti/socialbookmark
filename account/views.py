@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 from account.forms import UserRegistrationForm
+from account.models import Profile
 
 
 def register(request):
@@ -11,6 +12,8 @@ def register(request):
             new_user = form.save(commit=False)
             new_user.set_password(form.cleaned_data['password'])
             new_user.save()
+            profile = Profile.objects.create(user=new_user)
+
             return render(request, 'account/register_done.html', {'new_user': new_user})
     else:
         form = UserRegistrationForm()
