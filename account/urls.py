@@ -6,6 +6,7 @@ from account import views
 
 urlpatterns = [
     url(r'^$', views.dashboard, name='dashboard'),
+    url(r'^register/$', views.register, name='register'),
     url(r'^login/$', LoginView.as_view(redirect_authenticated_user=True) , name='login'),
     url(r'^logout/$', logout_then_login, name='logout'),
     url(r'^change-password/$', PasswordChangeView.as_view(), name='change_password'),
