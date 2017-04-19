@@ -1,4 +1,6 @@
+from django.conf import settings
 from django.conf.urls import url
+from django.conf.urls.static import static
 from django.contrib.auth.views import logout_then_login, LoginView, PasswordChangeView, PasswordChangeDoneView, \
     PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 
@@ -15,4 +17,8 @@ urlpatterns = [
     url(r'^password-reset/done$', PasswordResetDoneView.as_view(), name='password_reset_done'),
     url(r'^password-reset/confirm/(?P<uidb64>[-\w]+)/(?P<token>[-\w]+)$', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     url(r'^password-reset/complete$', PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    url(r'^edit/$', views.edit, name='edit'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
