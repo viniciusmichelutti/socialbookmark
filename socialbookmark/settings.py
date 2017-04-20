@@ -48,10 +48,25 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.facebook.FacebookOAuth2',
 )
 
+# FACEBOOK DATA TO LOGIN
 SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('FACEBOOK_AUTH_KEY', '<my_facebook_auth_key>')
 SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('FACEBOOK_AUTH_SECRET', '<my_facebook_auth_key>')
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 SOCIAL_AUTH_FACEBOOK_API_VERSION = '2.9'
+
+# SETTING THE PIPELINE WITH ONE MORE TO CREATE USER PROFILE
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'social_core.pipeline.user.create_user',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+    'account.auth_pipeline.save_profile'
+)
 ##################################### END MY CONFS
 
 # Application definition
