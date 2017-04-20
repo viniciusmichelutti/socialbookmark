@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.shortcuts import render
 
 from account.forms import UserRegistrationForm, UserEditForm, ProfileEditForm
@@ -12,7 +13,7 @@ def register(request):
             new_user = form.save(commit=False)
             new_user.set_password(form.cleaned_data['password'])
             new_user.save()
-            profile = Profile.objects.create(user=new_user)
+            Profile.objects.create(user=new_user)
 
             return render(request, 'account/register_done.html', {'new_user': new_user})
     else:
@@ -29,6 +30,9 @@ def edit(request):
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
+            messages.success(request, "Profile updated successfully.")
+        else:
+            messages.error(request, "Error while updating the profile.")
     else:
         user_form = UserEditForm(instance=request.user)
         profile_form = ProfileEditForm(instance=request.user.profile)
