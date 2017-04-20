@@ -27,15 +27,26 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+##################################### MY CONFS
+# USE REVERSE TO MOUNT URL TO THE AUTH URLS
 from django.core.urlresolvers import reverse_lazy
 LOGIN_REDIRECT_URL = reverse_lazy('dashboard')
 LOGIN_URL = reverse_lazy('login')
 LOGOUT_URL = reverse_lazy('logout')
 
+# TO DONT SEND EMAIL, JUST PRINT IT OUT
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+# BASE DIR TO UPLOADED IMAGES
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+# TO ACCEPT USING EMAIL AS AUTH
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'account.authentication.EmailAuthBackend',
+)
+##################################### END MY CONFS
 
 # Application definition
 
