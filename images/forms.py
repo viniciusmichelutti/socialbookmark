@@ -23,18 +23,19 @@ class ImageCreateForm(forms.ModelForm):
             raise forms.ValidationError("The given URL doesn't match valid image extensions. Only jpg, jpeg and png")
         return url
 
-    def save(self, commit=True):
+    def save(self, user, commit=True):
         image = super(ImageCreateForm, self).save(commit=False)
 
-        if commit:
-            image_url = self.cleaned_data['url']
-            image_name = "{}.{}".format(slugify(image.title), self._get_extension_from_url(image_url))
+        image_url = self.cleaned_data['url']
+        image_name = "{}.{}".format(slugify(image.title), self._get_extension_from_url(image_url))
 
-            #download image
-            response = request.urlopen(image_url)
-            image.image.save(image_name, ContentFile(response.read()))
+        #download image
+        response = request.urlopen(image_url)
 
-            image.save()
+        image.user = user
+        image.image.save(image_name, ContentFile(response.read()))
+
+        image.save()
 
         return image
 
