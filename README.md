@@ -1,5 +1,6 @@
 # Social Bookmark
 Django application with social touch :-)
+This is just for learning and tests purposes, so don't expect best practices and good architecture.
 
 ## Features
 This is a work in progress. So, until now, you can:
