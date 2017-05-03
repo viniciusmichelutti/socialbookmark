@@ -11,5 +11,6 @@ This is a work in progress. So, until now, you can:
 * Forget password (send confirmation email, token)
 * Change password (after logged in)
 * Edit profile and set image profile
-* It's possible to add a bookmark to click on any page and select image to bookmark
+* It's possible to add a bookmark clicking on any page and select an image to bookmark
+* View all images bookmarked, with infinite scroll paginator
 * Like and unlike photos from users
