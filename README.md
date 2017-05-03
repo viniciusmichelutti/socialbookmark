@@ -14,3 +14,6 @@ This is a work in progress. So, until now, you can:
 * It's possible to add a bookmark clicking on any page and select an image to bookmark
 * View all images bookmarked, with infinite scroll paginator
 * Like and unlike photos from users
+* View all users
+* View user profile and all bookmarks related
+* Follow and unfollow users

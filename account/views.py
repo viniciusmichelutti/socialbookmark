@@ -1,10 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404
+from django.views.decorators.http import require_POST
 
 from account.forms import UserRegistrationForm, UserEditForm, ProfileEditForm
-from account.models import Profile
+from account.models import Profile, Contact
+from common.decorators import ajax_required
 
 
 def register(request):
@@ -22,7 +25,7 @@ def register(request):
 
     return render(request, 'account/register.html', {'form': form})
 
-@login_required()
+@login_required
 def edit(request):
     if request.method == 'POST':
         user_form = UserEditForm(instance=request.user, data=request.POST)
@@ -53,3 +56,23 @@ def user_list(request):
 def user_detail(request, username):
     user = get_object_or_404(User, username=username, is_active=True)
     return render(request, 'account/user/detail.html', {'section': 'people', 'user': user})
+
+@ajax_required
+@login_required
+@require_POST
+def user_follow(request):
+    user_id = request.POST.get('user_id')
+    action = request.POST.get('action')
+
+    if user_id and action:
+        try:
+            user = User.objects.get(id=user_id, is_active=True)
+            if action == 'follow':
+                Contact.objects.create(from_user=request.user, to_user=user)
+            else:
+                Contact.objects.filter(from_user=request.user, to_user=user).delete()
+            return JsonResponse({'status': 'ok'})
+        except User.DoesNotExist:
+            pass
+
+    return JsonResponse({'status': 'nok'})
