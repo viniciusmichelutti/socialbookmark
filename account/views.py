@@ -7,6 +7,7 @@ from django.views.decorators.http import require_POST
 
 from account.forms import UserRegistrationForm, UserEditForm, ProfileEditForm
 from account.models import Profile, Contact
+from actions.utils import create_action
 from common.decorators import ajax_required
 
 
@@ -18,6 +19,7 @@ def register(request):
             new_user.set_password(form.cleaned_data['password'])
             new_user.save()
             Profile.objects.create(user=new_user)
+            create_action(new_user, 'created an account')
 
             return render(request, 'account/register_done.html', {'new_user': new_user})
     else:
@@ -69,8 +71,10 @@ def user_follow(request):
             user = User.objects.get(id=user_id, is_active=True)
             if action == 'follow':
                 Contact.objects.create(from_user=request.user, to_user=user)
+                create_action(request.user, 'is following', user)
             else:
                 Contact.objects.filter(from_user=request.user, to_user=user).delete()
+                create_action(request.user, 'unfollowed', user)
             return JsonResponse({'status': 'ok'})
         except User.DoesNotExist:
             pass
