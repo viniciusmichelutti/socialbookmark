@@ -7,6 +7,7 @@ from django.views.decorators.http import require_POST
 
 from account.forms import UserRegistrationForm, UserEditForm, ProfileEditForm
 from account.models import Profile, Contact
+from actions.models import Action
 from actions.utils import create_action
 from common.decorators import ajax_required
 
@@ -47,7 +48,15 @@ def edit(request):
 
 @login_required
 def dashboard(request):
-    return render(request, 'account/dashboard.html', {'section': 'dashboard'})
+    following_users = request.user.following.values_list('id', flat=True)
+    if following_users:
+        actions = Action.objects.exclude(user=request.user) \
+                                .filter(user_id__in=following_users) \
+                                .select_related('user', 'user__profile') \
+                                .prefetch_related('target')[:20]
+    else:
+        actions = []
+    return render(request, 'account/dashboard.html', {'section': 'dashboard', 'actions': actions})
 
 @login_required
 def user_list(request):

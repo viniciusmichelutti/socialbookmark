@@ -17,3 +17,4 @@ This is a work in progress. So, until now, you can:
 * View all users
 * View user profile and all bookmarks related
 * Follow and unfollow users
+* Users have own timeline, showing all the following users actions (bookmarked, liked, created account, follow/unfollow)

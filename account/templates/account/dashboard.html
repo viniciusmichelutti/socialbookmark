@@ -3,15 +3,24 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-    <h1>Dashboard</h1>
-    <p>Welcome to your dashboard {{ request.user.get_full_name }}.</p>
+    <h1>Olá, {{ request.user.get_full_name }}</h1>
 
     {% with total_images_created=request.user.images_created.count %}
-        <p>Welcome to your dashboard. You have bookmarked {{ total_images_created }} image{{ total_images_created|pluralize }}.</p>
+        <p>You have bookmarked {{ total_images_created }} image{{ total_images_created|pluralize }}.</p>
     {% endwith %}
 
     <p>
         Drag the following button to your bookmarks toolbar to bookmark images from other websites →
         <a href="javascript:{% include "bookmarklet_launcher.js" %}" class="button">Bookmark it</a>
     <p>
+
+    <h2>What's happening</h2>
+    <div id="action-list">
+        {% for action in actions %}
+            {% include "actions/action/detail.html" %}
+
+        {% empty %}
+            There is no actions yet... Perhaps, you can follow <a href="{% url "user_list" %}">more users</a>.
+        {% endfor %}
+    </div>
 {% endblock %}
