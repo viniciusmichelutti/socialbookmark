@@ -71,6 +71,10 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.user.user_details',
     'account.auth_pipeline.save_profile'
 )
+
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
+REDIS_DB = 0
 ##################################### END MY CONFS
 
 # Application definition

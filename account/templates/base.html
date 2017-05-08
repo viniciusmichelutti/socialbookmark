@@ -14,6 +14,9 @@
                     <li {% if section == "dashboard" %}class="selected"{% endif %}>
                         <a href="{% url "dashboard" %}">Dashboard</a>
                     </li>
+                    <li {% if section == "rank" %}class="selected"{% endif %}>
+                        <a href="{% url "rank" %}">Top Images</a>
+                    </li>
                     <li {% if section == "images" %}class="selected"{% endif %}>
                         <a href="{% url "list" %}">Images</a>
                     </li>
