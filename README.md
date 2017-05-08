@@ -2,7 +2,6 @@
 Testing Django. Simple social app. It uses Redis to count views.
 
 ## Features
-This is a work in progress. So, until now, you can:
 
 * User registration
 * Login / logout
@@ -17,3 +16,4 @@ This is a work in progress. So, until now, you can:
 * View user profile and all bookmarks related
 * Follow and unfollow users
 * Users have own timeline, showing all the following users actions (bookmarked, liked, created account, follow/unfollow)
+* Top Viewed Images, using redis to count the views
